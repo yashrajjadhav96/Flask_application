@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block body_class %}dashboard-page{% endblock %}
+
+{% block content %}
+
+<div class="emp-wrapper">
+
+    <header class="emp-header">
+        <h1>Employee Panel</h1>
+        <div class="emp-user">
+            <span>Hello, {{ username }}</span>
+            <a class="logout" href="{{ url_for('auth.logout') }}">Logout</a>
+        </div>
+    </header>
+
+    <div class="emp-main">
+
+        <div class="dashboard emp-dashboard">
+
+
+            <section class="dashboard-grid">
+
+                <div class="dash-card">
+                    <div class="dash-card-img">
+                        <img src="/static/images/emp2.png" alt="tasks">
+                    </div>
+                    <p>My Tasks</p>
+                </div>
+
+                <div class="dash-card">
+                    <div class="dash-card-img">
+                        <img src="/static/images/emp3.png" alt="attendance">
+                    </div>
+                    <p>Attendance</p>
+                </div>
+
+                <div class="dash-card">
+                    <div class="dash-card-img">
+                        <img src="/static/images/emp4.png" alt="payroll">
+                    </div>
+                    <p>Payroll</p>
+                </div>
+
+                <div class="dash-card">
+                    <div class="dash-card-img">
+                        <img src="/static/images/emp0.png" alt="leave">
+                    </div>
+                    <p>Leave Request</p>
+                </div>
+
+            </section>
+
+            <section class="dashboard-performance">
+                <h3>Performance Overview</h3>
+                <ul>
+                    <li>✔️ Completed Tasks: <strong>45</strong></li>
+                    <li>⏳ Pending Tasks: <strong>5</strong></li>
+                    <li>🏆 Performance Rating: <strong>4.7 / 5</strong></li>
+                </ul>
+            </section>
+
+        </div>
+
+    </div>
+
+    <footer class="emp-footer">
+        <p>© 2025 QuantumSoft | Employee Portal</p>
+    </footer>
+
+</div>
+
+{% endblock %}

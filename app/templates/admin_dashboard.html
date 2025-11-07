@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block body_class %}dashboard-page{% endblock %}
+
+{% block content %}
+
+<div class="emp-wrapper">
+
+    <header class="emp-header">
+        <h1>Admin Dashboard</h1>
+
+        <div class="emp-user">
+            <span>Welcome, {{ username }}</span>
+            <a class="logout" href="{{ url_for('auth.logout') }}">Logout</a>
+        </div>
+    </header>
+
+    <div class="emp-main">
+
+        <div class="dashboard emp-dashboard">
+
+            <section class="dashboard-grid">
+
+                <div class="dash-card">
+                    <div class="dash-card-img">
+                        <img src="/static/images/adm1.png" alt="Manage Users">
+                    </div>
+                    <p>Manage Users</p>
+                </div>
+
+                <div class="dash-card">
+                    <div class="dash-card-img">
+                        <img src="/static/images/adm2.png" alt="View Reports">
+                    </div>
+                    <p>View Reports</p>
+                </div>
+
+                <div class="dash-card">
+                    <div class="dash-card-img">
+                        <img src="/static/images/adm3.png" alt="System Settings">
+                    </div>
+                    <p>System Settings</p>
+                </div>
+
+                <div class="dash-card">
+                    <div class="dash-card-img">
+                        <img src="/static/images/adm5.png" alt="Send Announcement">
+                    </div>
+                    <p>Send Announcement</p>
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+    <footer class="emp-footer">
+        <p>© 2025 QuantumSoft | Admin Panel</p>
+    </footer>
+
+</div>
+
+{% endblock %}

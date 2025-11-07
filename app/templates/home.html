@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Welcome, {{ username }} 👋</h2>
+  <p>You're successfully logged in to the Flask Auth App.</p>
+  <a class="logout" href="{{ url_for('auth.logout') }}">Logout</a>
+</div>
+{% endblock %}

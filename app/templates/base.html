@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- ✅ Prevent Browser Cache -->
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flask Auth App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+
+  <div class="wrapper">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for msg in messages %}
+            <div class="flash">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- ✅ Main JavaScript -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+
+  <!-- ✅ ✅ Smart History + Input Clearing (Final Working Version) -->
+  <script>
+    const path = window.location.pathname;
+
+    /* ✅ 1. Clear Login Form Fields when login page loads */
+    if (path === "/login" || path === "/") {
+      window.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("form");
+        if (form) form.reset();
+      });
+    }
+
+    /* ✅ 2. Clear form right AFTER submitting login */
+    document.addEventListener("submit", function (e) {
+      const form = e.target;
+
+      if (path === "/login" || path === "/") {
+        setTimeout(() => { form.reset(); }, 200);
+      }
+    });
+
+    /* ✅ 3. Complete Back Button Control */
+    if (path === "/login" || path === "/" || path === "/logout") {
+
+      // ✅ Clear history completely on login/logout
+      history.replaceState(null, null, window.location.href);
+
+      window.onpopstate = function () {
+        history.go(1);  // stay on login
+      };
+    }
+    else {
+
+      // ✅ For all other pages (register, forgot, admin, emp, home)
+      history.pushState(null, null, window.location.href);
+
+      window.onpopstate = function () {
+        const ref = document.referrer;
+
+        // ✅ If coming back from login → go to login
+        if (ref.includes("/login") || ref.endsWith("/")) {
+          window.location.href = "/login";
+        } else {
+          // ✅ Prevent any deep backward navigation
+          history.go(1);
+        }
+      };
+    }
+  </script>
+
+</body>
+</html>
