@@ -10,7 +10,9 @@
 
         <div class="emp-user">
             <span>Welcome, {{ username }}</span>
-            <a class="logout" href="{{ url_for('auth.logout') }}">Logout</a>
+
+            <!-- ✅ Logout button -->
+            <a class="logout" id="logoutBtn" href="{{ url_for('auth.logout') }}">Logout</a>
         </div>
     </header>
 
@@ -59,5 +61,25 @@
     </footer>
 
 </div>
+
+<!-- ✅ ✅ Logout Confirmation Script -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    logoutBtn.addEventListener("click", function (e) {
+        e.preventDefault();  // stop auto logout
+
+        // ✅ Simple clean popup
+        const confirmLogout = confirm("Are you sure you want to logout?");
+
+        if (confirmLogout) {
+            window.location.href = this.href;  // proceed with logout
+        }
+    });
+
+});
+</script>
 
 {% endblock %}

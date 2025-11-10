@@ -3,30 +3,18 @@
 <div class="card">
   <h2>🔐 Login</h2>
 
-  <form method="POST" action="{{ url_for('auth.login') }}">
+  <form method="POST" action="{{ url_for('auth.login') }}" autocomplete="off" id="loginForm">
 
     <div class="input-group">
-      <input type="text"
-             name="username"
-             placeholder="Username"
-             autocomplete="off"
-             required />
+      <input type="text" name="username" placeholder="Username" autocomplete="off" required />
     </div>
 
     <div class="input-group">
-      <input type="email"
-             name="email"
-             placeholder="Email"
-             autocomplete="off"
-             required />
+      <input type="email" name="email" placeholder="Email" autocomplete="off" required />
     </div>
 
     <div class="input-group">
-      <input type="password"
-             name="password"
-             placeholder="Password"
-             autocomplete="new-password"
-             required />
+      <input type="password" name="password" placeholder="Password" autocomplete="new-password" required />
 <!--      <span class="toggle-password">👁️</span>-->
     </div>
 
@@ -38,4 +26,48 @@
     <a href="{{ url_for('auth.forgot') }}">Forgot Password?</a>
   </div>
 </div>
+
+<!-- ✅ ✅ Login Page Script (SAFE + NON-CONFLICTING) -->
+<script>
+(function () {
+
+  /* ✅ 1. Toggle Password Show/Hide */
+  document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll(".toggle-password").forEach(toggle => {
+          toggle.addEventListener("click", () => {
+              let input = toggle.previousElementSibling;
+              input.type = input.type === "password" ? "text" : "password";
+<!--              toggle.textContent = (input.type === "password") ? "👁️" : "🙈";-->
+          });
+      });
+  });
+
+
+  /* ✅ 2. Prevent login page from showing cached data */
+  window.addEventListener("pageshow", function (event) {
+      if (event.persisted) {
+          // Page restored from bfcache → force fresh reload
+          window.location.reload();
+      }
+  });
+
+
+  /* ✅ 3. Clear inputs once login page loads */
+  document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("loginForm");
+      if (form) form.reset();
+  });
+
+
+  /* ✅ 4. Clear input fields AFTER pressing login (fast redirect-safe) */
+  document.addEventListener("submit", function (e) {
+      const form = e.target;
+      if (form.id === "loginForm") {
+          setTimeout(() => form.reset(), 150);
+      }
+  });
+
+})();
+</script>
+
 {% endblock %}

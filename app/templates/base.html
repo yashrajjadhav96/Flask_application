@@ -38,6 +38,7 @@
     const path = window.location.pathname;
 
     /* ✅ 1. Clear Login Form Fields when login page loads */
+
     if (path === "/login" || path === "/") {
       window.addEventListener("DOMContentLoaded", () => {
         const form = document.querySelector("form");
@@ -46,6 +47,7 @@
     }
 
     /* ✅ 2. Clear form right AFTER submitting login */
+
     document.addEventListener("submit", function (e) {
       const form = e.target;
 
@@ -55,6 +57,7 @@
     });
 
     /* ✅ 3. Complete Back Button Control */
+
     if (path === "/login" || path === "/" || path === "/logout") {
 
       // ✅ Clear history completely on login/logout
@@ -80,6 +83,11 @@
           history.go(1);
         }
       };
+    }
+
+    /* ✅ 4. Remove duplicate login pages from history */
+    if (path === "/login" || path === "/") {
+      history.replaceState(null, null, window.location.href);
     }
   </script>
 

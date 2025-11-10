@@ -3,36 +3,36 @@
 <div class="card">
   <h2>Create Account</h2>
 
-  <form method="POST" action="{{ url_for('auth.register') }}">
+  <form method="POST" action="{{ url_for('auth.register') }}" autocomplete="off">
 
     <div class="input-group">
-      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="text" name="name" placeholder="Full Name" autocomplete="off" required />
     </div>
 
     <div class="input-group">
-      <input type="text" name="username" placeholder="Username" required />
+      <input type="text" name="username" placeholder="Username" autocomplete="off" required />
     </div>
 
     <div class="input-group">
-      <input type="text" name="mobile" placeholder="Mobile Number" required />
+      <input type="text" name="mobile" placeholder="Mobile Number" inputmode="numeric" pattern="[0-9]*" autocomplete="off" required />
     </div>
 
     <div class="input-group">
-      <input type="email" name="email" placeholder="Email ID" required />
+      <input type="email" name="email" placeholder="Email ID" autocomplete="off" required />
     </div>
 
     <div class="input-group">
-      <textarea name="address" placeholder="Address" required></textarea>
+      <textarea name="address" placeholder="Address" autocomplete="off" required style="width:100%;min-height:90px;border:1px solid #95D5B2;border-radius:8px;background:#0A0F0D;color:#F1F1F1;padding:12px;box-sizing:border-box;"></textarea>
     </div>
 
     <div class="input-group">
-      <input type="password" name="password" placeholder="Password" required />
-<!--      <span class="toggle-password">👁️</span>-->
+      <input type="password" name="password" placeholder="Password" autocomplete="new-password" required />
+      <!-- <span class="toggle-password">👁️</span> -->
     </div>
 
     <div class="input-group">
-      <input type="password" name="repassword" placeholder="Re-enter Password" required />
-<!--      <span class="toggle-password">👁️</span>-->
+      <input type="password" name="repassword" placeholder="Re-enter Password" autocomplete="new-password" required />
+      <!-- <span class="toggle-password">👁️</span> -->
     </div>
 
     <button type="submit">Register</button>
@@ -43,4 +43,33 @@
 
   </form>
 </div>
+
+<!-- 🔒 History/BFCache guard: if user returns here via back, send to Login -->
+<script>
+  (function () {
+    function bounceIfBack() {
+      var navEntries = performance && performance.getEntriesByType
+        ? performance.getEntriesByType('navigation') : null;
+      var isBackForward = navEntries && navEntries[0] && navEntries[0].type === 'back_forward';
+
+      if (isBackForward) {
+        window.location.replace("{{ url_for('auth.login') }}");
+      }
+    }
+
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) {
+        window.location.replace("{{ url_for('auth.login') }}");
+      } else {
+        bounceIfBack();
+      }
+    });
+
+    // Optional: clear any stale autofill on fresh load
+    document.addEventListener('DOMContentLoaded', function () {
+      var form = document.querySelector('form');
+      if (form) form.reset();
+    });
+  })();
+</script>
 {% endblock %}

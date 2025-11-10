@@ -9,14 +9,15 @@
         <h1>Employee Panel</h1>
         <div class="emp-user">
             <span>Hello, {{ username }}</span>
-            <a class="logout" href="{{ url_for('auth.logout') }}">Logout</a>
+
+            <!-- ✅ Logout button with ID -->
+            <a class="logout" id="logoutBtn" href="{{ url_for('auth.logout') }}">Logout</a>
         </div>
     </header>
 
     <div class="emp-main">
 
         <div class="dashboard emp-dashboard">
-
 
             <section class="dashboard-grid">
 
@@ -68,5 +69,24 @@
     </footer>
 
 </div>
+
+<!-- ✅ ✅ Logout Confirmation Script -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    logoutBtn.addEventListener("click", function (e) {
+        e.preventDefault();  // stop auto logout
+
+        const confirmLogout = confirm("Are you sure you want to logout?");
+
+        if (confirmLogout) {
+            window.location.href = this.href;  // ✅ proceed with logout
+        }
+    });
+
+});
+</script>
 
 {% endblock %}
