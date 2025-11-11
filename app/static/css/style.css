@@ -285,6 +285,43 @@ body.dashboard-page .wrapper {
   margin-top: auto;
 }
 
+/* ---------- about ---------- */
+.emp-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  color: #95D5B2;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  color: #00FF87;
+  text-decoration: underline;
+}
+
+/*  Logo + Title container */
+.emp-logo-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ✅ Logo styling */
+.emp-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+
+
+
 /* ---------- Responsive ---------- */
 @media (max-width: 500px) {
   .card { padding: 25px; }

@@ -5,59 +5,96 @@
 
 <div class="emp-wrapper">
 
-    <header class="emp-header">
-        <h1>Employee Panel</h1>
-        <div class="emp-user">
-            <span>Hello, {{ username }}</span>
+  <header class="emp-header">
 
-            <!-- ✅ Logout button with ID -->
-            <a class="logout" id="logoutBtn" href="{{ url_for('auth.logout') }}">Logout</a>
-        </div>
-    </header>
+    <!--  LOGO + TITLE -->
+    <div class="emp-logo-title">
+        <img src="/static/images/QT.jpg" class="emp-logo" alt="Logo">
+        <h1>Employee Panel</h1>
+    </div>
+
+    <nav class="emp-nav">
+        <a href="#" class="nav-link active" data-section="homeSection">Home</a>
+        <a href="#" class="nav-link" data-section="aboutSection">About</a>
+    </nav>
+
+    <div class="emp-user">
+        <span>Hello, {{ username }}</span>
+        <a class="logout" id="logoutBtn" href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+</header>
+
 
     <div class="emp-main">
 
         <div class="dashboard emp-dashboard">
 
-            <section class="dashboard-grid">
+            <!--  HOME SECTION -->
+            <section id="homeSection" class="page-section">
 
-                <div class="dash-card">
-                    <div class="dash-card-img">
-                        <img src="/static/images/emp2.png" alt="tasks">
-                    </div>
-                    <p>My Tasks</p>
-                </div>
+                <section class="dashboard-grid">
 
-                <div class="dash-card">
-                    <div class="dash-card-img">
-                        <img src="/static/images/emp3.png" alt="attendance">
+                    <div class="dash-card">
+                        <div class="dash-card-img">
+                            <img src="/static/images/emp2.png" alt="tasks">
+                        </div>
+                        <p>My Tasks</p>
                     </div>
-                    <p>Attendance</p>
-                </div>
 
-                <div class="dash-card">
-                    <div class="dash-card-img">
-                        <img src="/static/images/emp4.png" alt="payroll">
+                    <div class="dash-card">
+                        <div class="dash-card-img">
+                            <img src="/static/images/emp3.png" alt="attendance">
+                        </div>
+                        <p>Attendance</p>
                     </div>
-                    <p>Payroll</p>
-                </div>
 
-                <div class="dash-card">
-                    <div class="dash-card-img">
-                        <img src="/static/images/emp0.png" alt="leave">
+                    <div class="dash-card">
+                        <div class="dash-card-img">
+                            <img src="/static/images/emp4.png" alt="payroll">
+                        </div>
+                        <p>Payroll</p>
                     </div>
-                    <p>Leave Request</p>
-                </div>
+
+                    <div class="dash-card">
+                        <div class="dash-card-img">
+                            <img src="/static/images/emp0.png" alt="leave">
+                        </div>
+                        <p>Leave Request</p>
+                    </div>
+
+                </section>
+
+                <section class="dashboard-performance">
+                    <h3>Performance Overview</h3>
+                    <ul>
+                        <li>✔️ Completed Tasks: <strong>45</strong></li>
+                        <li>⏳ Pending Tasks: <strong>5</strong></li>
+                        <li>🏆 Performance Rating: <strong>4.7 / 5</strong></li>
+                    </ul>
+                </section>
 
             </section>
 
-            <section class="dashboard-performance">
-                <h3>Performance Overview</h3>
-                <ul>
-                    <li>✔️ Completed Tasks: <strong>45</strong></li>
-                    <li>⏳ Pending Tasks: <strong>5</strong></li>
-                    <li>🏆 Performance Rating: <strong>4.7 / 5</strong></li>
-                </ul>
+            <!-- ABOUT SECTION -->
+            <section id="aboutSection" class="page-section" style="display:none;">
+
+                <h2 style="color:#00FF87; margin-bottom:15px;">About Our Company</h2>
+
+                <p style="line-height:1.6; color:#d7fbe8;">
+                    QuantumSoft Technologies is a leading software development firm specializing in
+                    high-performance solutions, automation, cloud services, and digital transformation.
+                    We empower businesses by delivering reliable technology, seamless user experience,
+                    and enterprise-level quality products.
+                </p>
+
+                <br>
+
+                <p style="line-height:1.6; color:#d7fbe8;">
+                    Our employee portal is designed to centralize all work-related tools such as tasks,
+                    attendance, payroll, leave management, and performance monitoring—helping our team
+                    stay productive, informed, and connected.
+                </p>
+
             </section>
 
         </div>
@@ -70,20 +107,41 @@
 
 </div>
 
-<!-- ✅ ✅ Logout Confirmation Script -->
+<!--  TAB SWITCHING + LOGOUT CONFIRMATION -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
+    /*  Logout confirmation */
     const logoutBtn = document.getElementById("logoutBtn");
-
     logoutBtn.addEventListener("click", function (e) {
-        e.preventDefault();  // stop auto logout
-
-        const confirmLogout = confirm("Are you sure you want to logout?");
-
-        if (confirmLogout) {
-            window.location.href = this.href;  // ✅ proceed with logout
+        e.preventDefault();
+        if (confirm("Are you sure you want to logout?")) {
+            window.location.href = this.href;
         }
+    });
+
+    /* Home / About tab switching */
+    const navLinks = document.querySelectorAll(".nav-link");
+    const sections = document.querySelectorAll(".page-section");
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+            e.preventDefault();
+
+            // remove active state from all tabs
+            navLinks.forEach(l => l.classList.remove("active"));
+
+            // add active to clicked tab
+            this.classList.add("active");
+
+            const target = this.getAttribute("data-section");
+
+            // hide all sections
+            sections.forEach(sec => sec.style.display = "none");
+
+            // show selected section
+            document.getElementById(target).style.display = "block";
+        });
     });
 
 });

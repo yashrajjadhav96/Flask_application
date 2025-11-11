@@ -5,55 +5,89 @@
 
 <div class="emp-wrapper">
 
+
     <header class="emp-header">
+
+    <!-- LOGO + TITLE -->
+    <div class="emp-logo-title">
+        <img src="/static/images/QT.jpg" class="emp-logo" alt="Logo">
         <h1>Admin Dashboard</h1>
+    </div>
 
-        <div class="emp-user">
-            <span>Welcome, {{ username }}</span>
+    <nav class="emp-nav">
+        <a href="#" class="nav-link active" data-section="adminHome">Home</a>
+        <a href="#" class="nav-link" data-section="adminAbout">About</a>
+    </nav>
 
-            <!-- ✅ Logout button -->
-            <a class="logout" id="logoutBtn" href="{{ url_for('auth.logout') }}">Logout</a>
-        </div>
-    </header>
+    <div class="emp-user">
+        <span>Welcome, {{ username }}</span>
+        <a class="logout" id="logoutBtn" href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+</header>
+
 
     <div class="emp-main">
-
         <div class="dashboard emp-dashboard">
 
-            <section class="dashboard-grid">
+            <!-- HOME SECTION -->
+            <section id="adminHome" class="page-section">
 
-                <div class="dash-card">
-                    <div class="dash-card-img">
-                        <img src="/static/images/adm1.png" alt="Manage Users">
-                    </div>
-                    <p>Manage Users</p>
-                </div>
+                <section class="dashboard-grid">
 
-                <div class="dash-card">
-                    <div class="dash-card-img">
-                        <img src="/static/images/adm2.png" alt="View Reports">
+                    <div class="dash-card">
+                        <div class="dash-card-img">
+                            <img src="/static/images/adm1.png" alt="Manage Users">
+                        </div>
+                        <p>Manage Users</p>
                     </div>
-                    <p>View Reports</p>
-                </div>
 
-                <div class="dash-card">
-                    <div class="dash-card-img">
-                        <img src="/static/images/adm3.png" alt="System Settings">
+                    <div class="dash-card">
+                        <div class="dash-card-img">
+                            <img src="/static/images/adm2.png" alt="View Reports">
+                        </div>
+                        <p>View Reports</p>
                     </div>
-                    <p>System Settings</p>
-                </div>
 
-                <div class="dash-card">
-                    <div class="dash-card-img">
-                        <img src="/static/images/adm5.png" alt="Send Announcement">
+                    <div class="dash-card">
+                        <div class="dash-card-img">
+                            <img src="/static/images/adm3.png" alt="System Settings">
+                        </div>
+                        <p>System Settings</p>
                     </div>
-                    <p>Send Announcement</p>
-                </div>
+
+                    <div class="dash-card">
+                        <div class="dash-card-img">
+                            <img src="/static/images/adm5.png" alt="Send Announcement">
+                        </div>
+                        <p>Send Announcement</p>
+                    </div>
+
+                </section>
+
+            </section>
+
+
+            <!--ABOUT SECTION -->
+            <section id="adminAbout" class="page-section" style="display:none;">
+
+                <h2 style="color:#00FF87; margin-bottom:15px;">About QuantumSoft</h2>
+
+                <p style="line-height:1.6; color:#d7fbe8;">
+                    QuantumSoft Technologies is a leading IT solutions provider specializing in
+                    enterprise software development, cloud infrastructure, automation,
+                    and digital transformation solutions.
+                </p>
+
+                <br>
+
+                <p style="line-height:1.6; color:#d7fbe8;">
+                    This admin panel allows administrators to efficiently manage users, generate reports,
+                    configure system-level settings, and communicate with employees through announcements.
+                </p>
 
             </section>
 
         </div>
-
     </div>
 
     <footer class="emp-footer">
@@ -62,21 +96,35 @@
 
 </div>
 
-<!-- ✅ ✅ Logout Confirmation Script -->
+<!--  Navigation + Logout Script -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
+    /*  Logout confirmation */
     const logoutBtn = document.getElementById("logoutBtn");
-
     logoutBtn.addEventListener("click", function (e) {
-        e.preventDefault();  // stop auto logout
-
-        // ✅ Simple clean popup
-        const confirmLogout = confirm("Are you sure you want to logout?");
-
-        if (confirmLogout) {
-            window.location.href = this.href;  // proceed with logout
+        e.preventDefault();
+        if (confirm("Are you sure you want to logout?")) {
+            window.location.href = this.href;
         }
+    });
+
+    /*  Tab switching */
+    const navLinks = document.querySelectorAll(".nav-link");
+    const sections = document.querySelectorAll(".page-section");
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+            e.preventDefault();
+
+            navLinks.forEach(l => l.classList.remove("active"));
+            this.classList.add("active");
+
+            const target = this.dataset.section;
+            sections.forEach(sec => sec.style.display = "none");
+
+            document.getElementById(target).style.display = "block";
+        });
     });
 
 });
