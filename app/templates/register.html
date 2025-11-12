@@ -21,7 +21,7 @@
     </div>
 
     <div class="input-group">
-      <input type="email" name="email" placeholder="Email (admin: @admin, emp: @emp, others normal)" required data-hint="Use a valid email (e.g., user@emp or user@admin)." />
+      <input type="email" name="email" placeholder="Email= admin: @admin, emp: @emp " required data-hint="Use a valid email (e.g., user@emp or user@admin)." />
       <span class="tooltip"></span>
     </div>
 
@@ -53,7 +53,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("registerForm");
 
-  /* ✅ Validate on submit */
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     let isValid = true;
@@ -69,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const password = form.password.value.trim();
     const repassword = form.repassword.value.trim();
 
-    // ✅ Validation Rules
+
     if (!/^[A-Za-z\s]+$/.test(name)) {
       showTooltip(form.name, "Name must contain only letters.");
       isValid = false;
@@ -105,27 +104,27 @@ document.addEventListener("DOMContentLoaded", function () {
       isValid = false;
     }
 
-    // ✅ If valid — submit to backend (DB entry)
+
     if (isValid) {
       form.submit(); // Let Flask handle DB insertion
     }
   });
 
-  // ✅ Tooltip Display Function
+
   function showTooltip(input, message) {
     const tooltip = input.parentElement.querySelector(".tooltip");
     tooltip.textContent = message;
     tooltip.style.display = "block";
   }
 
-  /* ✅ Redirect to login and clear history on “Already have account” click */
+
   const loginLink = document.getElementById("loginLink");
   loginLink.addEventListener("click", function (e) {
     e.preventDefault();
     window.location.replace(this.href);
   });
 
-  /* ✅ If user navigates back (from history), auto redirect to login */
+
   window.addEventListener("pageshow", function (e) {
     if (e.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
       window.location.replace("{{ url_for('auth.login') }}");
@@ -135,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <style>
-/* ✅ Tooltip Styling */
+
 .tooltip {
   display: none;
   color: #FF4B4B;
@@ -144,7 +143,6 @@ document.addEventListener("DOMContentLoaded", function () {
   text-align: left;
 }
 
-/* ✅ Error highlight */
 input.error, textarea.error {
   border-color: #FF4B4B !important;
   box-shadow: 0 0 5px #FF4B4B;
